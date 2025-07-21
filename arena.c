@@ -19,6 +19,16 @@ struct Arena* arena_init_2(size_t cap) {
 }
 
 void* arena_alloc_head_2(size_t sz){
+    if (head != NULL){
+        if (head->siz + sz <= head->cap){
+            struct Arena* temp_arena = arena_init_2(head->cap);
+            temp_arena->siz = sz;
+            temp_arena->cap = sz * 2;
+            temp_arena->dat = NULL;
+            temp_arena->N = head; 
+            head = temp_arena;
+        }
+    }
     struct Arena* temp_arena = arena_init_2(sz * 2);
     temp_arena->siz = sz;
     temp_arena->cap = sz * 2;
