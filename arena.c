@@ -53,6 +53,34 @@ void* arena_alloc_last(size_t sz){
     }
 }
 
+/*
+    for normal Linked lists the second parameter i'll pass
+    would be the index of the element am trying to remove 
+    on the List at a particular memory Location from head.
+    ** points to a double memory arena Location. in this case
+    idx shows that the index exists and if there's data there
+    remove the data and index all together ...
+*/
+void* arena_delete_node(struct arena **head, size_t idx) {
+    struct arena* temp_arena_node;
+    if((*head)->dat[idx] != NULL){
+        temp_arena_node = *head;
+        *head = (*head)->N;
+        free(temp_arena_node);
+    } else {
+        struct arena* current = head;
+        while(current->N != NULL){
+            if(current->dat[idx] != NULL){
+                temp_arena_node = current->N;
+                current->N = current->N->N;
+                free(temp_arena_node);
+                break;
+            } else 
+                current = current->N;
+        }
+    }
+}
+
 void* arena_alloc(arena* arena,size_t siz) {
     if((arena->siz + siz) <= arena->cap){
         uint8_t* data = &arena->dat[arena->siz];

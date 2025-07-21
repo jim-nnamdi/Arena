@@ -3,6 +3,16 @@
 #include <stdint.h>
 #include <assert.h>
 
+/*
+    let's say i have a MDA
+    static int size = 20;
+    ssize_t * dat
+    for(ssize_t o = 0; o < sz; ++o)
+        dat[o] = 0;
+    int multi_dim_arr[size];
+    for(size_t i = 0; i < size; ++i)
+        multi_dim_arr[i] = 0;
+ */
 typedef struct arena {
     size_t cap;
     size_t siz;
