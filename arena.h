@@ -20,6 +20,14 @@ typedef struct arena {
     struct arena* N;
 } arena;
 
+/* NodeLink would hold other external declared */
+/* user initialised data structures as data source */
+/* then implement the core Logic using LL Formats */
+typedef struct NodeLink {
+    struct arena* link_arena;
+    struct NodeLink* next_link;
+};
+
 /* generic implementation Logic */
 struct arena* head = NULL;
 struct arena* arena_init(size_t cap);
