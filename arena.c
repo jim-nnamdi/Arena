@@ -27,6 +27,15 @@ void* arena_alloc_head_2(size_t sz){
     head =  temp;
 }
 
+void* arena_alloc_arbitrary(size_t sz, size_t idx) {
+    struct arena* temp = head;
+    while(temp != NULL && temp->N != NULL) {
+        if (temp->dat[idx] != NULL)
+            temp = temp->N;
+    }
+    temp->dat[idx] = NULL;
+}
+
 void* arena_alloc(arena* arena,size_t siz) {
     if((arena->siz + siz) <= arena->cap){
         uint8_t* data = &arena->dat[arena->siz];
