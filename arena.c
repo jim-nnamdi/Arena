@@ -1,16 +1,5 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <stdint.h>
-#include <assert.h>
+#include "arena.h"
 
-typedef struct Arena {
-    size_t cap;
-    size_t siz;
-    uint8_t* dat;
-    struct Arena* N;
-} Arena;
-
-struct Arena* head = NULL;
 struct Arena* arena_init(size_t cap) {
     struct Arena* temp = malloc(sizeof(size_t) * cap);
     temp->cap = cap;
@@ -18,6 +7,24 @@ struct Arena* arena_init(size_t cap) {
     temp->dat = sizeof(size_t) * cap;
     temp->N = NULL;
     return temp;
+}
+
+struct Arena* arena_init_2(size_t cap) {
+    struct Arena* temp_arena_obj = malloc(sizeof(struct Arena));
+    temp_arena_obj->cap = cap;
+    temp_arena_obj->siz = 0;
+    temp_arena_obj->dat = NULL;
+    temp_arena_obj->N = NULL;
+    return temp_arena_obj;
+}
+
+void* arena_alloc_head_2(size_t sz){
+    struct Arena* temp_arena = arena_init_2(sz * 2);
+    temp_arena->siz = sz;
+    temp_arena->cap = sz * 2;
+    temp_arena->dat = NULL;
+    temp_arena->N = head;
+    head = temp_arena;
 }
 
 void* arena_alloc(Arena* arena,size_t siz) {

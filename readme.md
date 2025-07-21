@@ -1,0 +1,2 @@
+# Arena
+Arena is a custom memory allocator that acts as a simple stack frame. it pre-allocates a bunch of memory to certain objects and deallocates them at the end of the program or function execution. this is currently a work in progress.
