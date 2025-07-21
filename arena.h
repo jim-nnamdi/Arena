@@ -16,7 +16,7 @@
 typedef struct arena {
     size_t cap;
     size_t siz;
-    uint8_t* dat;
+    size_t* dat;
     struct arena* N;
 } arena;
 

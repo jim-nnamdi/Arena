@@ -2,27 +2,48 @@
 
 struct arena* arena_init(size_t cap) {
     struct arena* temp = malloc(sizeof(size_t) * cap);
+    if (!temp) return NULL;
+
     temp->cap = cap;
     temp->siz = 0;
-    temp->dat = sizeof(size_t) * cap;
+
+    temp->dat = malloc(sizeof(size_t) * cap);
+    if(!temp->dat){
+        free(temp);
+        return NULL;
+    }
     temp->N = NULL;
     return temp;
 }
 
 struct arena* arena_init_2(size_t cap) {
     struct arena* temp_arena_obj = malloc(sizeof(struct arena));
+    if (!temp_arena_obj) return NULL;
+
     temp_arena_obj->cap = cap;
     temp_arena_obj->siz = 0;
-    temp_arena_obj->dat = NULL;
+
+    temp_arena_obj->dat = malloc(sizeof(size_t) * cap);
+    if(!temp_arena_obj) {
+        free(temp_arena_obj);
+        return NULL;
+    }
+
     temp_arena_obj->N = NULL;
     return temp_arena_obj;
 }
 
-void* arena_alloc_head_2(size_t sz){
+void* arena_alloc_head_2(size_t cap){
     struct arena* temp = malloc(sizeof(struct arena));
-    temp->dat = (sz * 2);
-    temp->siz = sz;
-    temp->cap = (sz * 2);
+    temp->siz = 0;
+    temp->cap = cap;
+
+    temp->dat = malloc(sizeof(size_t) * cap);
+    if(!temp->dat) {
+        free(temp->dat);
+        return;
+    }
+
     temp->N = head;
     head =  temp;
 }
@@ -70,7 +91,7 @@ void* arena_delete_node(struct arena **head, size_t idx) {
     } else {
         struct arena* current = head;
         while(current->N != NULL){
-            if(current->dat[idx] != NULL){
+            if(current->N->dat[idx] != NULL){
                 temp_arena_node = current->N;
                 current->N = current->N->N;
                 free(temp_arena_node);

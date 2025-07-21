@@ -1,0 +1,1 @@
+gcc -o arena arena.c -Wall && ./arena
