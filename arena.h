@@ -3,15 +3,15 @@
 #include <stdint.h>
 #include <assert.h>
 
-typedef struct Arena {
+typedef struct arena {
     size_t cap;
     size_t siz;
     uint8_t* dat;
-    struct Arena* N;
-} Arena;
+    struct arena* N;
+} arena;
 
-struct Arena* head = NULL;
-struct Arena* arena_init(size_t cap);
-void* arena_alloc(Arena* arena,size_t siz);
-void* arena_reset(Arena* arena);
-void* arena_free(Arena* arena);
+struct arena* head = NULL;
+struct arena* arena_init(size_t cap);
+void* arena_alloc(arena* arena,size_t siz);
+void* arena_reset(arena* arena);
+void* arena_free(arena* arena);
