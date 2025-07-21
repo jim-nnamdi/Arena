@@ -20,8 +20,15 @@ typedef struct arena {
     struct arena* N;
 } arena;
 
+/* generic implementation Logic */
 struct arena* head = NULL;
 struct arena* arena_init(size_t cap);
 void* arena_alloc(arena* arena,size_t siz);
 void* arena_reset(arena* arena);
 void* arena_free(arena* arena);
+
+/* arena arch based on Linked Lists */
+void* arena_alloc_last(size_t sz);
+void* arena_alloc_head_2(size_t sz);
+void* arena_alloc_arbitrary(size_t sz, size_t idx);
+void* arena_delete_node(struct arena **head, size_t idx);
