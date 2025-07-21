@@ -20,17 +20,14 @@ struct Arena* arena_init(size_t cap) {
     return temp;
 }
 
-void* arena_alloc(size_t siz) {
-    struct Arena* temp = head;
-    while (temp->N != NULL) {
-        if((temp->siz + siz) <= temp->cap) {
-            temp->siz += siz;
-            void* data = &temp->dat[temp->siz];
-            return data;
-        }
-        Arena* next = arena_init(temp->cap);
-        temp->N = next;
+void* arena_alloc(Arena* arena,size_t siz) {
+    if((arena->siz + siz) <= arena->cap){
+        uint8_t* data = &arena->dat[arena->siz];
+        arena->siz += siz;
+        return data;
     }
+    Arena* N = arena_init(arena->cap);
+    arena->N = N;
 }
 
 int main(void) {}
