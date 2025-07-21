@@ -63,9 +63,13 @@ void* arena_alloc_arbitrary(size_t sz, size_t idx) {
 
 void* arena_alloc_last(size_t sz){
     struct arena* Node = malloc(sizeof(struct arena));
-    Node->siz = sz;
-    Node->dat = (sz * 2);
-    Node->cap = (sz * 2);
+    Node->siz = 0;
+    Node->dat = malloc(sizeof(size_t) * sz);
+    if(!Node->dat) {
+        free(Node->dat);
+        return;
+    }
+    Node->cap = sz;
     Node->N = NULL;
     if (head == NULL)
         head = Node;
