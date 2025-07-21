@@ -12,6 +12,7 @@ struct arena* arena_init(size_t cap) {
         free(temp);
         return NULL;
     }
+    memset(temp->dat, 0, sizeof(size_t) * cap);
     temp->N = NULL;
     return temp;
 }
@@ -28,7 +29,7 @@ struct arena* arena_init_2(size_t cap) {
         free(temp_arena_obj);
         return NULL;
     }
-
+    memset(temp_arena_obj->dat, 0, sizeof(size_t) * cap);
     temp_arena_obj->N = NULL;
     return temp_arena_obj;
 }
@@ -50,11 +51,14 @@ void* arena_alloc_head_2(size_t cap){
 
 void* arena_alloc_arbitrary(size_t sz, size_t idx) {
     struct arena* temp = head;
-    while(temp != NULL && temp->N != NULL) {
-        if (temp->dat[idx] != NULL)
-            temp = temp->N;
+    while(temp != NULL) {
+        if(temp->dat[idx] == 0 ){
+            temp->dat[idx] = sz;
+            return &temp->dat[idx];
+        }
+        temp = temp->N;
     }
-    temp->dat[idx] = NULL;
+    return NULL;
 }
 
 void* arena_alloc_last(size_t sz){
