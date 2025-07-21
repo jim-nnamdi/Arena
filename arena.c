@@ -30,4 +30,14 @@ void* arena_alloc(Arena* arena,size_t siz) {
     arena->N = N;
 }
 
+void* arena_reset(Arena* arena) {
+    arena->siz = 0;
+}
+
+void* arena_free(Arena* arena) {
+    arena->siz = 0;
+    arena->cap = 0;
+    free(arena->dat);
+}
+
 int main(void) {}
