@@ -92,14 +92,14 @@ void* arena_alloc_last(size_t sz){
 */
 void* arena_delete_node(struct arena **head, size_t idx) {
     struct arena* temp_arena_node;
-    if((*head)->dat[idx] != NULL){
+    if((*head)->dat[idx] != 0){
         temp_arena_node = *head;
         *head = (*head)->N;
         free(temp_arena_node);
     } else {
         struct arena* current = head;
         while(current->N != NULL){
-            if(current->N->dat[idx] != NULL){
+            if(current->N->dat[idx] != 0){
                 temp_arena_node = current->N;
                 current->N = current->N->N;
                 free(temp_arena_node);
@@ -112,7 +112,7 @@ void* arena_delete_node(struct arena **head, size_t idx) {
 
 void* arena_alloc(arena* arena,size_t siz) {
     if((arena->siz + siz) <= arena->cap){
-        uint8_t* data = &arena->dat[arena->siz];
+        void* data = &arena->dat[arena->siz];
         arena->siz += siz;
         return data;
     }
