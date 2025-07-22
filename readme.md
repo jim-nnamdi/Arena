@@ -52,7 +52,7 @@ typedef struct arena {
 ```
 
 
-## 🔧 Usage
+## Usage
 
 ### Initialize an arena
 
@@ -113,7 +113,7 @@ int main(void) {
 ```
 
 
-## 🔍 Advanced Functions
+## Advanced Functions
 
 ### `arena_alloc_head_2(arena*, size_t)`
 Recursively allocates from the head arena, expanding if full.
@@ -128,7 +128,7 @@ Allocates at a specific index in the arena chain if available.
 Deletes a specific arena node from the linked structure.
 
 
-## 🧪 Debugging with `arena_print`
+## Debugging with `arena_print`
 
 ```c
 void arena_print(struct arena *arena) {
@@ -144,7 +144,7 @@ void arena_print(struct arena *arena) {
 }
 ```
 
-## 🧰 Included Utilities
+## Included Utilities
 
 ```c
 void *arena_reset(arena *arena);
@@ -156,25 +156,6 @@ void *arena_alloc_arbitrary(size_t sz, size_t idx);
 void *arena_delete_node(struct arena **head, struct arena *target);
 ```
 
-## 📚 Learn More
-
-This arena allocator is intentionally simple and modular. It's great for learning how manual memory management works—especially without a garbage collector. Extend it to build:
-
-- Memory pools
-- Fast linear allocators
-- Custom interpreters or language runtimes
-- Low-latency systems with predictable memory usage
-
-
-## 🤝 Contributing
+## Contributing
 
 Pull requests welcome! For major changes, please open an issue first to discuss what you would like to change or improve.
-
-## 📜 License
-
-MIT License. Feel free to use this for learning, teaching, or real-world systems.
-
-
-## 👨‍💻 Author
-
-Made with 💡 and a touch of C by **Jim**.
