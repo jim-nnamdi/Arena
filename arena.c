@@ -1,5 +1,7 @@
 #include "arena.h"
 
+struct arena *head = NULL;
+
 struct arena *arena_init(size_t cap) {
   struct arena *temp = malloc(sizeof(struct arena));
   if (!temp)
@@ -169,7 +171,7 @@ void arena_print(struct arena *arena) {
   }
 }
 
-int main(void) {
+int allocate(void) {
   size_t cap = 5;
   head = arena_init(cap);
   if (!head) {

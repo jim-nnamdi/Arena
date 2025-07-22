@@ -1,3 +1,4 @@
+#pragma once
 #include <assert.h>
 #include <stdint.h>
 #include <stdio.h>
@@ -30,7 +31,7 @@ typedef struct {
 } NodeLink;
 
 /* generic implementation Logic */
-struct arena *head = NULL;
+extern struct arena *head;
 struct arena *arena_init(size_t cap);
 void *arena_alloc(arena *arena, size_t siz);
 void *arena_reset(arena *arena);
