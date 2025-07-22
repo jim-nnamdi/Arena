@@ -79,6 +79,7 @@ void *arena_alloc_last(size_t sz) {
     temp_node->N = Node;
     return temp_node->N;
   }
+  return NULL;
 }
 
 /*
@@ -116,6 +117,7 @@ void *arena_delete_node(struct arena **head, struct arena *target) {
     } else
       current = current->N;
   }
+  return NULL;
 }
 
 /* here we're only setting the size and the data */
@@ -135,13 +137,14 @@ void *arena_alloc(arena *arena, size_t siz) {
   return arena_alloc(arena->N, siz);
 }
 
-void *arena_reset(arena *arena) { arena->siz = 0; }
+void *arena_reset(arena *arena) { arena->siz = 0; return arena; }
 
 void *arena_free(arena *arena) {
   arena->siz = 0;
   arena->cap = 0;
   free(arena->dat);
   free(arena);
+  return NULL;
 }
 
 void *arena_free_all(arena *arena) {
@@ -151,19 +154,23 @@ void *arena_free_all(arena *arena) {
     free(arena);
     arena = next_arena;
   }
+  return NULL;
 }
 
 void arena_print(struct arena *arena) {
+    int arena_block_count = 0;
   struct arena *temp = arena;
   while (temp != NULL) {
+    printf("\n Arena Block(%d) ", arena_block_count++);
     for (size_t i = 0; i < temp->cap; i++)
       printf("%zu", temp->dat[i]);
+    printf("\n");
     temp = temp->N;
   }
 }
 
 int main(void) {
-  size_t cap = 1024;
+  size_t cap = 5;
   head = arena_init(cap);
   if (!head) {
     printf("'failed to initialise arena'\n");
