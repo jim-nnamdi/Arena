@@ -34,19 +34,15 @@ struct arena* arena_init_2(size_t cap) {
     return temp_arena_obj;
 }
 
-void* arena_alloc_head_2(size_t cap){
-    struct arena* temp = malloc(sizeof(struct arena));
-    temp->siz = 0;
-    temp->cap = cap;
-
-    temp->dat = malloc(sizeof(size_t) * cap);
-    if(!temp->dat) {
-        free(temp);
-        return;
+void* arena_alloc_head_2(struct arena* arena,size_t size){
+    if((arena->siz + size) <= arena->cap){
+        void* data = &arena->dat[arena->siz];
+        arena->siz += size;
+        return data;
+    } else {
+        arena->N = arena_init(size);
+        return arena_alloc_head_2(arena->N, size);
     }
-
-    temp->N = head;
-    head =  temp;
 }
 
 void* arena_alloc_arbitrary(size_t sz, size_t idx) {
@@ -126,8 +122,8 @@ void* arena_alloc(arena* arena,size_t siz) {
         arena->N = NULL;
         return data;
     }
-    struct arena* N = arena_init(arena->cap);
-    return N;
+    arena->N = arena_init(arena->cap);
+    return arena_alloc(arena->N, siz);
 }
 
 void* arena_reset(arena* arena) {

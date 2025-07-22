@@ -37,6 +37,6 @@ void* arena_free(arena* arena);
 
 /* arena arch based on Linked Lists */
 void* arena_alloc_last(size_t sz);
-void* arena_alloc_head_2(size_t sz);
+void* arena_alloc_head_2(struct arena* arena,size_t size);
 void* arena_alloc_arbitrary(size_t sz, size_t idx);
 void* arena_delete_node(struct arena **head, struct arena* target);
