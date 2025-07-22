@@ -1,1 +1,1 @@
-gcc -o arena arena.c -Wall && ./arena
+gcc -o arena arena.c -Wall -Wextra -Werror -pedantic -std=c17 -g && ./arena
