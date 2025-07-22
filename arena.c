@@ -63,7 +63,7 @@ void* arena_alloc_last(size_t sz){
     Node->dat = malloc(sizeof(size_t) * sz);
     if(!Node->dat) {
         free(Node);
-        return;
+        return NULL;
     }
     Node->cap = sz;
     Node->N = NULL;
@@ -75,6 +75,7 @@ void* arena_alloc_last(size_t sz){
             temp_node = temp_node->N;
         }
         temp_node->N = Node;
+        return temp_node->N;
     }
 }
 
@@ -87,7 +88,7 @@ void* arena_alloc_last(size_t sz){
     remove the data and index all together ...
 */
 void* arena_delete_node(struct arena **head, struct arena* target) {
-    if(!head || !(*head) || !target) return;
+    if(!head || !(*head) || !target) return NULL;
 
     /* special case for the head Node which checks cap */
     /* and then checks if the val at the idx passed has */
@@ -151,4 +152,32 @@ void* arena_free_all(arena* arena) {
     }
 }
 
-int main(void) {}
+void arena_print(struct arena* arena) {
+    struct arena* temp = arena;
+    while(temp != NULL) {
+        for(size_t i = 0; i < temp->cap; i++)
+            printf("%zu", temp->dat[i]);
+        temp = temp->N;
+    }
+}
+
+int main(void) {
+    size_t cap = 1024;
+    head = arena_init(cap);
+    if (!head) {
+        printf("'failed to initialise arena'\n");
+        return (1);
+    }
+
+    size_t* ptr_one = (size_t*)arena_alloc(head, 1); 
+    ptr_one = 100;
+    size_t* ptr_two = (size_t*)arena_alloc(head, 1); 
+    ptr_two = 200;
+    
+    printf("Before printing ... \n");
+    arena_print(head);
+
+    arena_free_all(head);
+    head = NULL;
+    return 0;
+}
