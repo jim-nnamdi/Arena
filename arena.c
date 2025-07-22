@@ -114,14 +114,19 @@ void* arena_delete_node(struct arena **head, struct arena* target) {
     }
 }
 
+/* here we're only setting the size and the data */
+/* data not necessarily but a pointer that gives */
+/* us power to cast arbitrary data types later  */
 void* arena_alloc(arena* arena,size_t siz) {
     if((arena->siz + siz) <= arena->cap){
         void* data = &arena->dat[arena->siz];
         arena->siz += siz;
-        arena->dat = malloc(sizeof(size_t) * arena->cap);
-        arena->N = NULL;
         return data;
     }
+
+    /* move to the next arena if the condition */
+    /* fails where current Node.size > siz and */
+    /* recursively handle the implementation */
     arena->N = arena_init(arena->cap);
     return arena_alloc(arena->N, siz);
 }
