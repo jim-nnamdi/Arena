@@ -6,7 +6,7 @@
 
 A minimal, educational **arena memory allocator** implemented in C, using a **linked-list-based structure** to support arbitrary allocations within fixed-size memory blocks. This project is great for learning custom memory management strategies, optimizing memory reuse, and understanding data locality.
 
-## 🚀 What is an Arena Allocator?
+## What is an Arena Allocator?
 
 An **arena allocator** (also called a **region allocator**) is a fast memory allocation strategy that allocates memory from large pre-allocated blocks. It's especially useful when:
 
@@ -16,13 +16,13 @@ An **arena allocator** (also called a **region allocator**) is a fast memory all
 
 This implementation supports:
 
-- 📦 Chunked allocations from fixed-capacity blocks  
-- ➕ Seamless allocation across linked arena nodes  
-- 🧹 Efficient mass reset and freeing  
-- 🧪 Simple debug print view  
+- Chunked allocations from fixed-capacity blocks  
+- Seamless allocation across linked arena nodes  
+- Efficient mass reset and freeing  
+- Simple debug print view  
 
 
-## 📂 File Structure
+## File Structure
 
 ```bash
 .
@@ -32,7 +32,7 @@ This implementation supports:
 ```
 
 
-## 🛠️ Features
+## Features
 
 - **Linked Arena Nodes**: Automatically grows when capacity is exceeded.
 - **Head / Tail / Arbitrary Allocation**: Choose where to allocate.
@@ -40,7 +40,7 @@ This implementation supports:
 - **Debugging Support**: Print arena layout with `arena_print()`.
 
 
-## 📦 Struct Overview
+## Struct Overview
 
 ```c
 typedef struct arena {
