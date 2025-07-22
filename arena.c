@@ -1,7 +1,7 @@
 #include "arena.h"
 
 struct arena* arena_init(size_t cap) {
-    struct arena* temp = malloc(sizeof(size_t) * cap);
+    struct arena* temp = malloc(sizeof(struct arena));
     if (!temp) return NULL;
 
     temp->cap = cap;
@@ -25,7 +25,7 @@ struct arena* arena_init_2(size_t cap) {
     temp_arena_obj->siz = 0;
 
     temp_arena_obj->dat = malloc(sizeof(size_t) * cap);
-    if(!temp_arena_obj) {
+    if(!temp_arena_obj->dat) {
         free(temp_arena_obj);
         return NULL;
     }
@@ -41,7 +41,7 @@ void* arena_alloc_head_2(size_t cap){
 
     temp->dat = malloc(sizeof(size_t) * cap);
     if(!temp->dat) {
-        free(temp->dat);
+        free(temp);
         return;
     }
 
@@ -66,7 +66,7 @@ void* arena_alloc_last(size_t sz){
     Node->siz = 0;
     Node->dat = malloc(sizeof(size_t) * sz);
     if(!Node->dat) {
-        free(Node->dat);
+        free(Node);
         return;
     }
     Node->cap = sz;
@@ -97,7 +97,7 @@ void* arena_delete_node(struct arena **head, size_t idx) {
         *head = (*head)->N;
         free(temp_arena_node);
     } else {
-        struct arena* current = head;
+        struct arena* current = *head;
         while(current->N != NULL){
             if(current->N->dat[idx] != 0){
                 temp_arena_node = current->N;
@@ -114,10 +114,12 @@ void* arena_alloc(arena* arena,size_t siz) {
     if((arena->siz + siz) <= arena->cap){
         void* data = &arena->dat[arena->siz];
         arena->siz += siz;
+        arena->dat = malloc(sizeof(size_t) * arena->cap);
+        arena->N = NULL;
         return data;
     }
     struct arena* N = arena_init(arena->cap);
-    arena->N = N;
+    return N;
 }
 
 void* arena_reset(arena* arena) {
@@ -128,6 +130,7 @@ void* arena_free(arena* arena) {
     arena->siz = 0;
     arena->cap = 0;
     free(arena->dat);
+    free(arena);
 }
 
 int main(void) {}
