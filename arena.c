@@ -38,9 +38,6 @@ struct arena *arena_init_2(size_t cap) {
   return temp_arena_obj;
 }
 
-/* to avoid stack frames overflowing we need to     */
-/* check and ensure that the current arena size and */
-/* the new size is not larger than the arena's cap */
 void *arena_alloc_head_2(struct arena *arena, size_t size) {
   if ((arena->siz + size) <= arena->cap) {
     void *data = &arena->dat[arena->siz];
@@ -87,30 +84,16 @@ void *arena_alloc_last(size_t sz) {
   return NULL;
 }
 
-/*
-    for normal Linked lists the second parameter i'll pass
-    would be the index of the element am trying to remove
-    on the List at a particular memory Location from head.
-    ** points to a double memory arena Location. in this case
-    idx shows that the index exists and if there's data there
-    remove the data and index all together ...
-*/
 void *arena_delete_node(struct arena **head, struct arena *target) {
   if (!head || !(*head) || !target)
     return NULL;
 
-  /* special case for the head Node which checks cap */
-  /* and then checks if the val at the idx passed has */
-  /* some value, then we proceed to delete that Node */
   if (*head == target) {
     *head = (*head)->N;
     free(target->dat);
     free(target);
   }
 
-  /* assuming the idx is not '0' which is not the */
-  /* head, we look for the next Node and check if */
-  /* the data matches the index ... */
   struct arena *current = *head;
   while (current->N != NULL) {
     if (current->N == target) {
@@ -125,9 +108,6 @@ void *arena_delete_node(struct arena **head, struct arena *target) {
   return NULL;
 }
 
-/* here we're only setting the size and the data */
-/* data not necessarily but a pointer that gives */
-/* us power to cast arbitrary data types later  */
 void *arena_alloc(arena *arena, size_t siz) {
   if ((arena->siz + siz) <= arena->cap) {
     void *data = &arena->dat[arena->siz];
@@ -135,14 +115,14 @@ void *arena_alloc(arena *arena, size_t siz) {
     return data;
   }
 
-  /* move to the next arena if the condition */
-  /* fails where current Node.size > siz and */
-  /* recursively handle the implementation */
   arena->N = arena_init(arena->cap);
   return arena_alloc(arena->N, siz);
 }
 
-void *arena_reset(arena *arena) { arena->siz = 0; return arena; }
+void *arena_reset(arena *arena) {
+  arena->siz = 0;
+  return arena;
+}
 
 void *arena_free(arena *arena) {
   arena->siz = 0;
@@ -163,7 +143,7 @@ void *arena_free_all(arena *arena) {
 }
 
 void arena_print(struct arena *arena) {
-    int arena_block_count = 0;
+  int arena_block_count = 0;
   struct arena *temp = arena;
   while (temp != NULL) {
     printf("\n Arena Block(%d) ", arena_block_count++);
