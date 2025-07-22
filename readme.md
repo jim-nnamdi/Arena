@@ -54,32 +54,32 @@ typedef struct arena {
 
 ## 🔧 Usage
 
-### 🧪 Initialize an arena
+### Initialize an arena
 
 ```c
 arena *head = arena_init(5);
 ```
 
-### 🧠 Allocate memory
+### Allocate memory
 
 ```c
 size_t *a = (size_t *)arena_alloc(head, 1);
 *a = 100;
 ```
 
-### 🔁 Reuse or reset
+### Reuse or reset
 
 ```c
 arena_reset(head); // Reuse the same arena
 ```
 
-### 🧹 Free all memory
+### Free all memory
 
 ```c
 arena_free_all(head);
 ```
 
-## 🖥️ Example Output
+## Example Output
 
 ```
 Before printing ... 
@@ -87,7 +87,7 @@ Before printing ...
  Arena Block(0) 100200000
 ```
 
-## 📄 Sample: `main.c`
+## Sample: `main.c`
 
 ```c
 int main(void) {
