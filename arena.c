@@ -90,23 +90,31 @@ void* arena_alloc_last(size_t sz){
     idx shows that the index exists and if there's data there
     remove the data and index all together ...
 */
-void* arena_delete_node(struct arena **head, size_t idx) {
-    struct arena* temp_arena_node;
-    if((*head)->dat[idx] != 0){
-        temp_arena_node = *head;
+void* arena_delete_node(struct arena **head, struct arena* target) {
+    if(!head || !(*head) || !target) return;
+
+    /* special case for the head Node which checks cap */
+    /* and then checks if the val at the idx passed has */
+    /* some value, then we proceed to delete that Node */
+    if(*head == target){
         *head = (*head)->N;
-        free(temp_arena_node);
-    } else {
-        struct arena* current = *head;
-        while(current->N != NULL){
-            if(current->N->dat[idx] != 0){
-                temp_arena_node = current->N;
-                current->N = current->N->N;
-                free(temp_arena_node);
-                break;
-            } else 
-                current = current->N;
-        }
+        free(target->dat);
+        free(target);
+    }
+
+    /* assuming the idx is not '0' which is not the */
+    /* head, we look for the next Node and check if */
+    /* the data matches the index ... */
+    struct arena* current = *head;
+    while(current->N != NULL){
+        if(current->N == target){
+            struct arena* temp = current->N;
+            current->N = current->N->N;
+            free(temp->dat);
+            free(temp);
+            break;
+        } else 
+            current = current->N;
     }
 }
 
