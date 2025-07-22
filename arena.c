@@ -133,4 +133,13 @@ void* arena_free(arena* arena) {
     free(arena);
 }
 
+void* arena_free_all(arena* arena) {
+    while(arena != NULL) {
+        struct arena* next_arena = arena->N;
+        free(arena->dat);
+        free(arena);
+        arena = next_arena;
+    }
+}
+
 int main(void) {}
