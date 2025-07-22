@@ -1,7 +1,7 @@
 #include "arena.h"
 
-int allocate(void);
+int allocate(size_t capacity);
 int main(void){
-    int chunk = allocate();
+    int chunk = allocate(5);
     return chunk;
 }

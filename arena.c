@@ -38,6 +38,9 @@ struct arena *arena_init_2(size_t cap) {
   return temp_arena_obj;
 }
 
+/* to avoid stack frames overflowing we need to     */
+/* check and ensure that the current arena size and */
+/* the new size is not larger than the arena's cap */
 void *arena_alloc_head_2(struct arena *arena, size_t size) {
   if ((arena->siz + size) <= arena->cap) {
     void *data = &arena->dat[arena->siz];
@@ -171,9 +174,8 @@ void arena_print(struct arena *arena) {
   }
 }
 
-int allocate(void) {
-  size_t cap = 5;
-  head = arena_init(cap);
+int allocate(size_t capacity) {
+  head = arena_init(capacity);
   if (!head) {
     printf("'failed to initialise arena'\n");
     return (1);
