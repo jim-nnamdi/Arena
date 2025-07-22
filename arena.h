@@ -39,4 +39,4 @@ void* arena_free(arena* arena);
 void* arena_alloc_last(size_t sz);
 void* arena_alloc_head_2(size_t sz);
 void* arena_alloc_arbitrary(size_t sz, size_t idx);
-void* arena_delete_node(struct arena **head, size_t idx);
+void* arena_delete_node(struct arena **head, struct arena* target);
