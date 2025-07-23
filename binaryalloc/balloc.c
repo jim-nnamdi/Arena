@@ -35,3 +35,41 @@ Node *create(size_t val) {
     return node;
   }
   
+  /**
+   * @brief 
+   * Inorder Traversal for BinaryTree
+   * Traverses Left & Iterates right
+   * @param node 
+   */
+  void inorder(Node* node) {
+    if (!node) return;
+    inorder(node->left);
+    printf("%d\n", node->key);
+    inorder(node->right);
+  }
+
+  /**
+   * @brief 
+   * Preorder Traversal returns rootkey
+   * Traverses Left & Traverses right
+   * @param node 
+   */
+  void preorder(Node* node) {
+    if (!node) return;
+    printf(node->key);
+    preorder(node->left);
+    preorder(node->right);
+  }
+
+  /**
+   * @brief 
+   * Postorder Traversal iterates L&R
+   * Then returns corresponding keys
+   * @param node 
+   */
+  void postorder(Node* node){
+    if (!node) return;
+    postorder(node->left);
+    postorder(node->right);
+    printf(node->key);
+  }
